@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:q_radio/widgets/radio_list.dart';
 
 class RadioPlayer extends StatefulWidget {
   const RadioPlayer({super.key});
@@ -68,7 +69,10 @@ class _RadioPlayerState extends State<RadioPlayer> {
                 color: Colors.black,
                 indent: 30,
                 endIndent: 30,
-              )
+              ),
+              Expanded(
+                child: RadioList(),
+              ),
             ],
           ),
         )

@@ -17,6 +17,10 @@ class RadioList extends StatelessWidget {
             height: 50,
             fit: BoxFit.cover,
           ),
+          horizontalTitleGap: 50,
+          title: Text(
+            station.name,
+          ),
         );
       }),
     );
