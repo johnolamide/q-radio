@@ -14,4 +14,10 @@ class SharedPrefsApi {
     return RadioStations.allStations
         .firstWhere((element) => element.name == stationName);
   }
+
+  static Future<void> setStation(RadioStation station) async {
+    final sharedPrefs = await SharedPreferences.getInstance();
+
+    sharedPrefs.setString(_key, station.name);
+  }
 }

@@ -34,7 +34,7 @@ class MainApp extends StatelessWidget {
             create: ((context) => RadioProvider(initialStation))),
       ],
       child: MaterialApp(
-        debugShowCheckedModeBanner: false,
+        debugShowCheckedModeBanner: true,
         title: "Q-Radio",
         theme: ThemeData(
           primarySwatch: Colors.blue,

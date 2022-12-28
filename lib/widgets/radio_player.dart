@@ -1,7 +1,6 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:q_radio/apis/radio_api.dart';
 import 'package:q_radio/providers/radio_provider.dart';
 import 'package:q_radio/widgets/radio_list.dart';
 
@@ -19,6 +18,7 @@ class _RadioPlayerState extends State<RadioPlayer>
   late Animation<Offset> radioListOffset;
 
   bool listEnabled = false;
+  bool isPlaying = true;
 
   @override
   void initState() {
@@ -43,6 +43,12 @@ class _RadioPlayerState extends State<RadioPlayer>
         curve: Curves.easeOut,
       ),
     );
+
+    RadioApi.player.stateStream.listen((event) {
+      setState(() {
+        isPlaying = event;
+      });
+    });
   }
 
   @override
@@ -90,10 +96,14 @@ class _RadioPlayerState extends State<RadioPlayer>
                         iconSize: 30,
                         icon: const Icon(Icons.list)),
                     IconButton(
-                        onPressed: () {},
+                        onPressed: () async {
+                          isPlaying
+                              ? RadioApi.player.stop()
+                              : RadioApi.player.play();
+                        },
                         color: Colors.white,
                         iconSize: 30,
-                        icon: const Icon(Icons.play_arrow)),
+                        icon: Icon(isPlaying ? Icons.stop : Icons.play_arrow)),
                     IconButton(
                         onPressed: () {},
                         color: Colors.white,
