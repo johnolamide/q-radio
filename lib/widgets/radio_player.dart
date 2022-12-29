@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:q_radio/apis/radio_api.dart';
 import 'package:q_radio/providers/radio_provider.dart';
 import 'package:q_radio/widgets/radio_list.dart';
+import 'package:volume_controller/volume_controller.dart';
 
 class RadioPlayer extends StatefulWidget {
   const RadioPlayer({super.key});
@@ -14,11 +15,13 @@ class RadioPlayer extends StatefulWidget {
 class _RadioPlayerState extends State<RadioPlayer>
     with SingleTickerProviderStateMixin {
   late AnimationController animationController;
+  late VolumeController volumeController;
   late Animation<Offset> radioOffset;
   late Animation<Offset> radioListOffset;
 
   bool listEnabled = false;
   bool isPlaying = true;
+  bool isMuted = false;
 
   @override
   void initState() {
@@ -49,6 +52,7 @@ class _RadioPlayerState extends State<RadioPlayer>
         isPlaying = event;
       });
     });
+    volumeController = VolumeController();
   }
 
   @override
@@ -105,10 +109,20 @@ class _RadioPlayerState extends State<RadioPlayer>
                         iconSize: 30,
                         icon: Icon(isPlaying ? Icons.stop : Icons.play_arrow)),
                     IconButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          if (isMuted) {
+                            volumeController.setVolume(0.5);
+                          } else {
+                            volumeController.muteVolume();
+                          }
+                          setState(() {
+                            isMuted = !isMuted;
+                          });
+                        },
                         color: Colors.white,
                         iconSize: 30,
-                        icon: const Icon(Icons.volume_up)),
+                        icon:
+                            Icon(isMuted ? Icons.volume_off : Icons.volume_up)),
                   ],
                 ),
               ],
